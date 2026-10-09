@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: '23 */6 * * *'
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - 'tests/**'
+      - '.github/workflows/soundcloud-sync.yml'
 
 permissions:
   contents: write
@@ -30,6 +36,8 @@ jobs:
           python-version: '3.12'
       - name: Installer yt-dlp
         run: python -m pip install --disable-pip-version-check yt-dlp
+      - name: Verifier les tests automatiques
+        run: python -m unittest discover -s tests -v
       - name: Synchroniser la playlist et Blogger
         env:
           BLOGGER_CLIENT_ID: ${{ secrets.BLOGGER_CLIENT_ID }}
@@ -42,7 +50,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add chansons/index.html chansons/data.json chansons/state.json
+          git add chansons/ annonces/ journal/
           if ! git diff --cached --quiet; then
             git commit -m 'Synchroniser les chansons NovaNic'
             git push
