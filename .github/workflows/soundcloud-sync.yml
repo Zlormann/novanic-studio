@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: novanic-soundcloud-sync
@@ -15,6 +17,9 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     timeout-minutes: 12
     steps:
       - name: Recuperer le depot
@@ -42,3 +47,13 @@ jobs:
             git commit -m 'Synchroniser les chansons NovaNic'
             git push
           fi
+
+      - name: Configurer GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Preparer les fichiers GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - name: Mettre le catalogue en ligne
+        id: deployment
+        uses: actions/deploy-pages@v4
