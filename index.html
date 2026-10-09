@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NovaNic Studio 2.0 — Générateur d'articles</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0713;--card:#1c122b;--line:#63437e;--gold:#ffd37f;--violet:#d0a8ff;--muted:#c6b1d5}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top right,#39234e,transparent 40%),var(--bg);color:#fff;font:15px/1.6 system-ui,Arial,sans-serif}header,main,footer{max-width:1200px;margin:auto;padding:20px}header h1{font-size:34px;margin:0;color:var(--gold)}header p,footer,.help{color:var(--muted)}main{display:grid;grid-template-columns:1fr 1fr;gap:22px}.card{background:var(--card);border:1px solid var(--line);padding:24px;border-radius:20px}h2{margin:0 0 15px;color:var(--violet)}label{display:block;font-weight:700;margin:13px 0 6px}input,select,textarea{width:100%;background:#100a1c;color:#fff;border:1px solid #775696;border-radius:10px;padding:12px;font:inherit}textarea{min-height:100px;resize:vertical}button{cursor:pointer;background:var(--gold);color:#21122d;border:0;border-radius:10px;padding:11px 15px;font-weight:750;margin:5px 5px 5px 0}button.secondary{background:#553773;color:#fff}.buttons{margin:20px 0}.help{font-size:13px}#preview{width:100%;height:520px;border:1px solid var(--line);border-radius:12px;background:#100a1c}#output{height:220px;font:12px/1.5 monospace}#status{min-height:25px;color:var(--gold)}a{color:var(--gold)}@media(max-width:850px){main{grid-template-columns:1fr}}
+</style></head><body>
+<header><h1>✦ NovaNic Studio 2.0</h1><p>De l’ombre aux étoiles 💜 — Ton générateur d’articles pour Blogger, hébergé sur GitHub Pages.</p></header>
+<main><section class="card"><h2>✍️ Composer un article</h2>
+<label for="type">Type d’article</label><select id="type"><option value="song">🎵 Chanson</option><option value="story">📖 Histoire NovaTeam</option><option value="news">✨ Actualité</option><option value="presentation">🌟 Présentation</option></select>
+<label for="title">Titre *</label><input id="title" placeholder="Ex. Qui est Nova ?">
+<label for="subtitle">Sous-titre</label><input id="subtitle" placeholder="De l'ombre aux étoiles">
+<label for="intro">Introduction</label><textarea id="intro" placeholder="Présente ton article..."></textarea>
+<label for="story">Histoire, message ou détails</label><textarea id="story" placeholder="Raconte l'histoire..."></textarea>
+<label for="lyrics">Paroles / extrait (facultatif)</label><textarea id="lyrics" placeholder="Tes paroles..."></textarea>
+<label for="soundcloud">Lien SoundCloud (facultatif)</label><input type="url" id="soundcloud" placeholder="https://soundcloud.com/novanic/...">
+<label for="youtube">Lien vidéo YouTube (facultatif)</label><input type="url" id="youtube" placeholder="https://www.youtube.com/watch?v=...">
+<label for="cover">URL publique de la pochette (facultatif)</label><input type="url" id="cover" placeholder="https://.../image.jpg">
+<label for="author">Signature</label><input id="author" value="NovaNic &amp; la NovaTeam">
+<label for="labels">Libellés Blogger</label><input id="labels" value="NovaNic, Chanson, Musique">
+<div class="buttons"><button id="generate">✨ Générer</button><button class="secondary" id="demo">Charger un exemple</button><button class="secondary" id="save">💾 Sauver le brouillon</button><button class="secondary" id="load">📂 Restaurer</button><button class="secondary" id="reset">Effacer</button></div><p id="status" role="status" aria-live="polite"></p></section>
+<section class="card"><h2>👁️ Aperçu et code Blogger</h2><p class="help">Ce site ne publie pas directement : copie le HTML et colle-le dans Blogger → Nouvel article → Affichage HTML. Les brouillons restent uniquement dans ce navigateur.</p>
+<label for="postTitle">Titre à copier dans Blogger</label><input id="postTitle" readonly>
+<iframe id="preview" sandbox="allow-scripts allow-popups" title="Aperçu NovaNic"></iframe>
+<div class="buttons"><button id="copy">📋 Copier le HTML</button><button class="secondary" id="copyTitle">Copier le titre</button><button class="secondary" id="download">⬇ Télécharger l'article</button></div>
+<label for="output">Code HTML</label><textarea id="output" readonly spellcheck="false"></textarea><p class="help" id="labelsOut"></p>
+<p><a href="https://novanic-officiel.blogspot.com/" target="_blank" rel="noopener noreferrer">Voir le blog NovaNic ↗</a></p></section></main>
+<footer>© 2026 NovaNic • Pas un empire. Une maison. • Aucun compte ni clé API nécessaire.</footer>
+<script>
+'use strict';
+const $=id=>document.getElementById(id), ids=['type','title','subtitle','intro','story','lyrics','soundcloud','youtube','cover','author','labels'];
+const official={youtube:'https://www.youtube.com/playlist?list=PL8GEGyzX4bDi9mzJu77-WxpfRmNRtx4Aa',soundcloud:'https://soundcloud.com/novanic/sets/novanic-de-lombre-aux-toiles',facebook:'https://www.facebook.com/NovaNic.officiel/',blog:'https://novanic-officiel.blogspot.com/'};
+const esc=v=>String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const val=id=>$(id).value.trim();
+function safeUrl(s){try{let u=new URL(s);return u.protocol==='https:'?u.href:''}catch{return ''}}
+function youtubeEmbed(raw){try{const u=new URL(raw);if(!['youtube.com','www.youtube.com','m.youtube.com','youtu.be'].includes(u.hostname))return '';const id=u.hostname==='youtu.be'?u.pathname.split('/')[1]:(u.pathname==='/watch'?u.searchParams.get('v'):(u.pathname.startsWith('/shorts/')?u.pathname.split('/')[2]:''));return /^[A-Za-z0-9_-]{11}$/.test(id)?'https://www.youtube-nocookie.com/embed/'+id:''}catch{return ''}}
+function soundcloudEmbed(raw){try{let u=new URL(raw);if(!['soundcloud.com','www.soundcloud.com'].includes(u.hostname))return '';return 'https://w.soundcloud.com/player/?url='+encodeURIComponent(u.href)}catch{return ''}}
+function para(s){return '<p style="white-space:pre-line">'+esc(s)+'</p>'}
+function generate(){const title=val('title')||'Nouvel article NovaNic',type=val('type'),sc=safeUrl(val('soundcloud')),yt=safeUrl(val('youtube')),cover=safeUrl(val('cover'));const kicker={song:'🎵 Nouvelle chanson',story:'📖 Histoire NovaTeam',news:'✨ Actualité',presentation:'🌟 Présentation'}[type];const ytUrl=youtubeEmbed(yt),scUrl=soundcloudEmbed(sc);
+const html=`<article style="max-width:850px;margin:20px auto;padding:clamp(20px,4vw,40px);border:1px solid #714995;border-radius:22px;background:linear-gradient(145deg,#241530,#100a1b);color:#f8f0ff;font:16px/1.8 Arial,Helvetica,sans-serif;overflow-wrap:anywhere">
+<p style="color:#ffd37f;font-size:12px;letter-spacing:2px">✦ NOVANIC — DE L’OMBRE AUX ÉTOILES</p><p style="color:#d2b2f4">${esc(kicker)}</p>
+<h1 style="color:#ffd37f;line-height:1.2;font-size:36px">${esc(title)}</h1>
+${val('subtitle')?'<p style="color:#d2b2f4;font-size:20px">'+esc(val('subtitle'))+'</p>':''}
+${cover?'<img src="'+esc(cover)+'" alt="Pochette de '+esc(title)+'" loading="lazy" style="max-width:100%;width:100%;border-radius:15px">':''}
+${para(val('intro'))}
+${val('story')?'<h2 style="color:#d2b2f4">💜 L’histoire</h2>'+para(val('story')):''}
+${val('lyrics')?'<h2 style="color:#d2b2f4">✍️ Paroles</h2><blockquote style="white-space:pre-line;border-left:4px solid #ffd37f;background:#322141;padding:18px">'+esc(val('lyrics'))+'</blockquote>':''}
+${scUrl?'<h2 style="color:#d2b2f4">🎧 Écouter sur SoundCloud</h2><iframe title="Lecteur SoundCloud" src="'+esc(scUrl)+'" width="100%" height="166" style="border:0" loading="lazy" allow="autoplay"></iframe>':''}
+${sc?'<p><a style="color:#ffd37f" href="'+esc(sc)+'" target="_blank" rel="noopener noreferrer">♫ Écouter sur SoundCloud ↗</a></p>':''}
+${ytUrl?'<h2 style="color:#d2b2f4">▶ Vidéo YouTube</h2><iframe title="Vidéo NovaNic" src="'+esc(ytUrl)+'" width="100%" height="400" style="border:0;max-width:100%" loading="lazy" allowfullscreen="allowfullscreen"></iframe>':''}
+${yt?'<p><a style="color:#ffd37f" href="'+esc(yt)+'" target="_blank" rel="noopener noreferrer">▶ Voir sur YouTube ↗</a></p>':''}
+<h2 style="color:#ffd37f">🌟 Retrouver NovaNic</h2>
+<p><a style="color:#ffd37f" href="${official.youtube}" target="_blank" rel="noopener noreferrer">Playlist YouTube</a> • <a style="color:#ffd37f" href="${official.soundcloud}" target="_blank" rel="noopener noreferrer">Playlist SoundCloud</a> • <a style="color:#ffd37f" href="${official.facebook}" target="_blank" rel="noopener noreferrer">Facebook officiel</a></p>
+<hr style="border:0;border-top:1px solid #704a96"><p style="text-align:center;color:#ffd37f">« Pas un empire. Une maison. » 💜</p><p style="text-align:center;font-size:12px;color:#c4b0d3">${esc(val('author')||'NovaNic')} • © 2026 NovaNic</p></article>`;
+$('postTitle').value=title;$('output').value=html;$('labelsOut').textContent='Libellés suggérés : '+val('labels');$('preview').srcdoc='<!doctype html><html lang="fr"><meta charset="utf-8"><body style="margin:0;background:#0b0713">'+html+'</body></html>';return html}
+function status(s){$('status').textContent=s}
+$('generate').onclick=()=>{generate();status('Article généré : prêt à copier dans Blogger !')};
+$('type').onchange=()=>{$('labels').value={song:'NovaNic, Chanson, Musique',story:'NovaNic, NovaTeam, Histoire',news:'NovaNic, Actualité',presentation:'NovaNic, NovaTeam, Présentation'}[val('type')];generate()};
+ids.forEach(id=>$(id).addEventListener('input',generate));
+$('save').onclick=()=>{try{localStorage.setItem('novanic-studio-v2',JSON.stringify(Object.fromEntries(ids.map(id=>[id,$(id).value]))));status('Brouillon sauvegardé sur cet appareil.')}catch{status('Sauvegarde locale indisponible.')}};
+$('load').onclick=()=>{try{const d=JSON.parse(localStorage.getItem('novanic-studio-v2')||'null');if(!d){status('Aucun brouillon trouvé.');return}ids.forEach(id=>{if(d[id]!=null)$(id).value=d[id]});generate();status('Brouillon restauré.')}catch{status('Impossible de restaurer le brouillon.')}};
+$('demo').onclick=()=>{$('type').value='presentation';$('title').value='Qui est Nova ? ✨';$('subtitle').value='Le cœur de l’univers NovaNic';$('intro').value='Nova est une lumière symbolique au cœur de l’univers NovaNic. Une étoile qui continue de briller lorsque tout semble sombre.';$('story').value='Nicolas est le cœur qui ressent, NovaNic est la voix qui raconte, et la NovaTeam avance ensemble. Pas un empire. Une maison.';$('labels').value='NovaNic, NovaTeam, Présentation';generate();status('Exemple chargé, tu peux le personnaliser.')};
+$('reset').onclick=()=>{['title','subtitle','intro','story','lyrics','soundcloud','youtube','cover'].forEach(id=>$(id).value='');generate();status('Champs effacés.')};
+async function copy(s){try{await navigator.clipboard.writeText(s);status('Copié !')}catch{const el=$('output');el.focus();el.select();status('Utilise Ctrl+C pour copier le code sélectionné.')}};
+$('copy').onclick=()=>copy(generate());$('copyTitle').onclick=()=>copy(val('title'));
+$('download').onclick=()=>{const blob=new Blob([generate()],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='novanic-article.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);status('Article HTML téléchargé.')};
+generate();
+</script></body></html>
