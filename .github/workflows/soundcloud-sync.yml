@@ -30,6 +30,8 @@ jobs:
     steps:
       - name: Recuperer le depot
         uses: actions/checkout@v4
+        with:
+          ref: main
       - name: Installer Python
         uses: actions/setup-python@v5
         with:
@@ -53,7 +55,17 @@ jobs:
           git add chansons/ annonces/ journal/
           if ! git diff --cached --quiet; then
             git commit -m 'Synchroniser les chansons NovaNic'
-            git push
+            for tentative in 1 2 3 4 5; do
+              if git pull --rebase origin main && git push origin HEAD:main; then
+                echo 'Catalogue enregistre avec succes.'
+                break
+              fi
+              if [ "$tentative" -eq 5 ]; then
+                echo 'Impossible de pousser apres 5 tentatives.' >&2
+                exit 1
+              fi
+              sleep 4
+            done
           fi
 
       - name: Configurer GitHub Pages
