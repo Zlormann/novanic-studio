@@ -1,27 +1,30 @@
-# NovaNic Studio 2.0 💜
+# NovaNic Studio 3.0 💜
 
-Générateur d'articles HTML pour le blog [NovaNic — De l'ombre aux étoiles](https://novanic-officiel.blogspot.com/).
+**De l’ombre aux étoiles** — générateur d'articles et automatisation musicale NovaNic.
 
-## Fonctionnalités
-- Chansons, histoires NovaTeam, actualités et présentations.
-- Aperçu de l'article et code HTML Blogger.
-- Liens SoundCloud / YouTube et playlists officielles.
-- Copie du HTML et du titre, téléchargement HTML.
-- Sauvegarde et restauration d'un brouillon **dans le navigateur** (localStorage).
+## Accès rapide
 
-## Utilisation
-1. Ouvrir le site GitHub Pages.
-2. Remplir le formulaire.
-3. Cliquer sur « Générer » et vérifier l'aperçu.
-4. Copier le titre et le HTML.
-5. Dans Blogger, créer un nouvel article, passer en affichage HTML et coller le code.
+- [✍️ Générateur d'articles](https://zlormann.github.io/novanic-studio/)
+- [🎵 Catalogue musical](https://zlormann.github.io/novanic-studio/chansons/)
+- [📋 Journal de synchronisation](https://zlormann.github.io/novanic-studio/journal/)
+- [📣 Annonces NovaTeam](https://zlormann.github.io/novanic-studio/annonces/)
+- [📖 Guide de configuration complet](AUTOMATISATION.md)
 
-## Activer GitHub Pages
-Dans le dépôt GitHub : **Settings → Pages → Build and deployment → Deploy from a branch**, choisir **main** et **/(root)** puis enregistrer.
+## Fonctionnement
 
-Adresse attendue : https://zlormann.github.io/novanic-studio/
+Le générateur permet de créer des articles HTML à coller dans Blogger, avec aperçu et sauvegarde locale d'un brouillon.
 
-## Confidentialité et limites
-Ce site GitHub Pages est **public** : il n'y a pas de connexion privée. Les brouillons restent dans le stockage local du navigateur, sans synchronisation. Ne pas saisir de données confidentielles. Le site ne publie **pas automatiquement** sur Blogger ; aucune clé API n'est intégrée.
+Une automatisation GitHub Actions consulte toutes les 6 heures environ la [playlist SoundCloud NovaNic](https://soundcloud.com/novanic/sets/novanic-de-lombre-aux-toiles), met à jour le catalogue, récupère les titres et pochettes disponibles, génère des annonces pour les nouvelles chansons et tient un journal public. Les cinq chansons présentes au premier relevé sont conservées comme archives.
+
+**Publication Blogger :** le code est installé mais il faut configurer les secrets OAuth Blogger dans GitHub. Sans ces secrets, aucune publication n'est effectuée. Les annonces Facebook sont des textes à copier, pas des publications automatiques.
+
+## Tests
+
+```bash
+python -m pip install yt-dlp
+python -m unittest discover -s tests -v
+```
+
+Les tests s'exécutent également avant chaque synchronisation GitHub.
 
 © 2026 NovaNic — « Pas un empire. Une maison. »
