@@ -10,12 +10,13 @@ Ce module complète le générateur d'articles existant.
 - Le suivi dans `chansons/state.json` évite normalement les doublons.
 - Si Blogger n'est pas connecté, les nouvelles chansons attendent ; elles pourront être publiées après connexion.
 
-## Activer GitHub Actions
-1. Aller dans **Settings → Actions → General → Workflow permissions**.
-2. Choisir **Read and write permissions** et enregistrer.
-3. Aller dans **Actions → NovaNic - Synchroniser SoundCloud → Run workflow**.
-4. Vérifier les logs du premier lancement.
-5. Une fois terminé, le catalogue doit apparaître à : https://zlormann.github.io/novanic-studio/chansons/
+## Activer GitHub Pages et GitHub Actions
+1. Dans **Settings → Pages → Build and deployment**, choisir **Source : GitHub Actions** (au lieu de « Deploy from a branch »). Cela permet de mettre à jour le catalogue même lorsque le commit est créé par GitHub Actions.
+2. Aller dans **Settings → Actions → General → Workflow permissions**.
+3. Choisir **Read and write permissions** et enregistrer.
+4. Aller dans **Actions → NovaNic - Synchroniser SoundCloud → Run workflow**.
+5. Vérifier les logs du premier lancement.
+6. Une fois terminé, le catalogue doit apparaître à : https://zlormann.github.io/novanic-studio/chansons/
 
 Si l'extraction échoue, SoundCloud peut bloquer les accès automatisés ou modifier son site. Le script s'arrête sans effacer les chansons déjà enregistrées. L'outil `yt-dlp` est une dépendance externe.
 
