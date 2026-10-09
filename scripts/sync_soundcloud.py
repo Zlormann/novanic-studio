@@ -75,6 +75,24 @@ def get_tracks():
                        "cover": cover, "description": str(item.get("description") or "")[:500]})
     if not result:
         raise RuntimeError("Playlist SoundCloud inaccessible ou vide : aucune donnée écrasée.")
+    # Métadonnées publiques SoundCloud (facultatives). En cas de blocage de
+    # l'endpoint oEmbed, conserver les informations déjà extraites.
+    for track in result:
+        if track["cover"] and track["title"] != slug_title(track["url"]):
+            continue
+        try:
+            meta = request_json("https://soundcloud.com/oembed?" +
+                                urlencode({"format": "json", "url": track["url"]}))
+            image = safe_url(meta.get("thumbnail_url"))
+            if image:
+                track["cover"] = image
+            name = str(meta.get("title") or "").strip()
+            if name.lower().endswith(" by novanic"):
+                name = name[:-11].strip()
+            if name and track["title"] == slug_title(track["url"]):
+                track["title"] = name[:200]
+        except Exception:
+            pass
     return list({t["id"]: t for t in result}.values())
 
 def iframe(url):
