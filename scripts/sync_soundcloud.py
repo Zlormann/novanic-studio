@@ -245,6 +245,16 @@ def write_pages(tracks, state):
                                '<p>Aucune nouvelle chanson depuis l’activation.</p>') + '</div>'),
         encoding="utf-8")
 
+def safe_error_label(error):
+    """Journaliser uniquement le type et le code HTTP, jamais les jetons ni le corps."""
+    if isinstance(error, HTTPError):
+        return "HTTP " + str(error.code)
+    if isinstance(error, RuntimeError):
+        match = re.fullmatch(r"Blogger HTTP (\\d{3})", str(error))
+        if match:
+            return "HTTP " + match.group(1)
+    return type(error).__name__
+
 def log_event(log, kind, detail):
     log.append({"at": now(), "type": kind, "detail": str(detail)[:220]})
     del log[:-100]
@@ -321,14 +331,14 @@ def main():
                 except Exception as error:
                     t["blogger_status"] = "échec"
                     log_event(events, "erreur Blogger", t["title"] + " (" +
-                              type(error).__name__ + ")")
-                    print("Blogger : échec pour", t["id"], type(error).__name__)
+                              safe_error_label(error) + ")")
+                    print("Blogger : échec pour", t["id"], safe_error_label(error))
         else:
             print("Blogger non connecté : secrets OAuth requis.")
     except Exception as error:
         log_event(events, "connexion Blogger", "indisponible (" +
-                  type(error).__name__ + ")")
-        print("Blogger non connecté :", type(error).__name__)
+                  safe_error_label(error) + ")")
+        print("Blogger non connecté :", safe_error_label(error))
     visible = [known[t["id"]] for t in tracks]
     write_pages(visible, state)
     write_journal(events, state, len(tracks))
