@@ -317,6 +317,14 @@ def main():
         token = blogger_token()
         if token:
             blog = blog_id(token)
+            # Vérification en lecture seule, même sans nouvelle chanson.
+            # L'API /blogs/{id} confirme l'accès au blog sans créer d'article.
+            request_json(
+                "https://www.googleapis.com/blogger/v3/blogs/" +
+                quote(str(blog), safe=""),
+                {"Authorization": "Bearer " + token})
+            log_event(events, "connexion Blogger", "vérifiée (accès API autorisé)")
+            print("Blogger : connexion API vérifiée (lecture seule).")
             for t in known.values():
                 if t.get("blogger_done"):
                     continue
