@@ -78,5 +78,15 @@
     "at": "2026-10-09T18:14:09+00:00",
     "type": "connexion Blogger",
     "detail": "vérifiée (accès API autorisé)"
+  },
+  {
+    "at": "2026-10-09T22:45:57+00:00",
+    "type": "synchronisation",
+    "detail": "5 chanson(s), 0 nouveauté(s)"
+  },
+  {
+    "at": "2026-10-09T22:45:57+00:00",
+    "type": "connexion Blogger",
+    "detail": "vérifiée (accès API autorisé)"
   }
 ]
