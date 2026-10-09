@@ -1,27 +1,52 @@
 [
   {
     "id": "2339560289",
-    "title": "Nouvelle chanson NovaNic",
-    "url": "https://soundcloud.com/novanic/le-monde-m-coute"
+    "title": "Le Monde M Coute",
+    "url": "https://soundcloud.com/novanic/le-monde-m-coute",
+    "blogger_done": true,
+    "baseline": true,
+    "cover": "",
+    "description": "",
+    "blogger_status": "archive"
   },
   {
     "id": "2339288252",
-    "title": "Nouvelle chanson NovaNic",
-    "url": "https://soundcloud.com/novanic/ma-voix-dans-les-etoiles"
+    "title": "Ma Voix Dans Les Etoiles",
+    "url": "https://soundcloud.com/novanic/ma-voix-dans-les-etoiles",
+    "blogger_done": true,
+    "baseline": true,
+    "cover": "",
+    "description": "",
+    "blogger_status": "archive"
   },
   {
     "id": "2339278721",
-    "title": "Nouvelle chanson NovaNic",
-    "url": "https://soundcloud.com/novanic/novanic-est-ne"
+    "title": "Novanic Est Ne",
+    "url": "https://soundcloud.com/novanic/novanic-est-ne",
+    "blogger_done": true,
+    "baseline": true,
+    "cover": "",
+    "description": "",
+    "blogger_status": "archive"
   },
   {
     "id": "2339916449",
-    "title": "Nouvelle chanson NovaNic",
-    "url": "https://soundcloud.com/novanic/premier-succes"
+    "title": "Premier Succes",
+    "url": "https://soundcloud.com/novanic/premier-succes",
+    "blogger_done": true,
+    "baseline": true,
+    "cover": "",
+    "description": "",
+    "blogger_status": "archive"
   },
   {
     "id": "2339993786",
-    "title": "Nouvelle chanson NovaNic",
-    "url": "https://soundcloud.com/novanic/carnet-contre-le-monde"
+    "title": "Carnet Contre Le Monde",
+    "url": "https://soundcloud.com/novanic/carnet-contre-le-monde",
+    "blogger_done": true,
+    "baseline": true,
+    "cover": "",
+    "description": "",
+    "blogger_status": "archive"
   }
 ]

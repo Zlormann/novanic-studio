@@ -1,40 +1,55 @@
 {
-  "version": 1,
+  "version": 2,
   "tracks": {
     "2339560289": {
       "id": "2339560289",
-      "title": "Nouvelle chanson NovaNic",
+      "title": "Le Monde M Coute",
       "url": "https://soundcloud.com/novanic/le-monde-m-coute",
       "blogger_done": true,
-      "baseline": true
+      "baseline": true,
+      "cover": "",
+      "description": "",
+      "blogger_status": "archive"
     },
     "2339288252": {
       "id": "2339288252",
-      "title": "Nouvelle chanson NovaNic",
+      "title": "Ma Voix Dans Les Etoiles",
       "url": "https://soundcloud.com/novanic/ma-voix-dans-les-etoiles",
       "blogger_done": true,
-      "baseline": true
+      "baseline": true,
+      "cover": "",
+      "description": "",
+      "blogger_status": "archive"
     },
     "2339278721": {
       "id": "2339278721",
-      "title": "Nouvelle chanson NovaNic",
+      "title": "Novanic Est Ne",
       "url": "https://soundcloud.com/novanic/novanic-est-ne",
       "blogger_done": true,
-      "baseline": true
+      "baseline": true,
+      "cover": "",
+      "description": "",
+      "blogger_status": "archive"
     },
     "2339916449": {
       "id": "2339916449",
-      "title": "Nouvelle chanson NovaNic",
+      "title": "Premier Succes",
       "url": "https://soundcloud.com/novanic/premier-succes",
       "blogger_done": true,
-      "baseline": true
+      "baseline": true,
+      "cover": "",
+      "description": "",
+      "blogger_status": "archive"
     },
     "2339993786": {
       "id": "2339993786",
-      "title": "Nouvelle chanson NovaNic",
+      "title": "Carnet Contre Le Monde",
       "url": "https://soundcloud.com/novanic/carnet-contre-le-monde",
       "blogger_done": true,
-      "baseline": true
+      "baseline": true,
+      "cover": "",
+      "description": "",
+      "blogger_status": "archive"
     }
   }
 }
