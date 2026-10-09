@@ -250,7 +250,7 @@ def safe_error_label(error):
     if isinstance(error, HTTPError):
         return "HTTP " + str(error.code)
     if isinstance(error, RuntimeError):
-        match = re.fullmatch(r"Blogger HTTP (\\d{3})", str(error))
+        match = re.fullmatch(r"Blogger HTTP (\d{3})", str(error))
         if match:
             return "HTTP " + match.group(1)
     return type(error).__name__
