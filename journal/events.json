@@ -328,5 +328,15 @@
     "at": "2026-10-17T04:42:32+00:00",
     "type": "connexion Blogger",
     "detail": "indisponible (HTTP 400)"
+  },
+  {
+    "at": "2026-10-17T10:59:19+00:00",
+    "type": "synchronisation",
+    "detail": "5 chanson(s), 0 nouveauté(s)"
+  },
+  {
+    "at": "2026-10-17T10:59:19+00:00",
+    "type": "connexion Blogger",
+    "detail": "indisponible (HTTP 400)"
   }
 ]
