@@ -1,15 +1,5 @@
 [
   {
-    "at": "2026-10-09T17:10:18+00:00",
-    "type": "synchronisation",
-    "detail": "5 chanson(s), 0 nouveauté(s)"
-  },
-  {
-    "at": "2026-10-09T17:11:12+00:00",
-    "type": "synchronisation",
-    "detail": "5 chanson(s), 0 nouveauté(s)"
-  },
-  {
     "at": "2026-10-09T17:14:09+00:00",
     "type": "synchronisation",
     "detail": "5 chanson(s), 0 nouveauté(s)"
@@ -496,6 +486,16 @@
   },
   {
     "at": "2026-10-21T17:24:22+00:00",
+    "type": "connexion Blogger",
+    "detail": "indisponible (HTTP 400)"
+  },
+  {
+    "at": "2026-10-21T21:50:59+00:00",
+    "type": "synchronisation",
+    "detail": "5 chanson(s), 0 nouveauté(s)"
+  },
+  {
+    "at": "2026-10-21T21:50:59+00:00",
     "type": "connexion Blogger",
     "detail": "indisponible (HTTP 400)"
   }
